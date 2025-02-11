@@ -1,0 +1,74 @@
+[
+    {
+      "id": null,
+      "City": "Hassan",
+      "AQI": 25,
+      "PM25": 16.75,
+      "PM10": 25,
+      "CO": 9.67,
+      "OZONE": 16,
+      "SO2": 21.33,
+      "NO2": 13.67,
+      "NH3": 1.56
+    },
+    {
+      "id": null,
+      "City": "Prayagraj",
+      "AQI": 25,
+      "PM25": 16.2,
+      "PM10": 23.6,
+      "CO": 15.29,
+      "OZONE": 6,
+      "SO2": 17,
+      "NO2": 5.43,
+      "NH3": 5
+    },
+    {
+      "id": null,
+      "City": "Davanagere",
+      "AQI": 26,
+      "PM25": 25.29,
+      "PM10": 26,
+      "CO": 20.5,
+      "OZONE": 22.62,
+      "SO2": 7.2,
+      "NO2": 9,
+      "NH3": 2
+    },
+    {
+      "id": null,
+      "City": "Ramanathapuram",
+      "AQI": 26,
+      "PM25": 23.25,
+      "PM10": 26.4,
+      "CO": 4,
+      "OZONE": 14,
+      "SO2": 8.5,
+      "NO2": 2,
+      "NH3": 1
+    },
+    {
+      "id": null,
+      "City": "Chhal",
+      "AQI": 27,
+      "PM25": 25.17,
+      "PM10": 23.5,
+      "CO": 21.43,
+      "OZONE": 26.62,
+      "SO2": 12,
+      "NO2": 5,
+      "NH3": 2
+    },
+    {
+      "id": null,
+      "City": "Udupi",
+      "AQI": 27,
+      "PM25": 8,
+      "PM10": 11.75,
+      "CO": 22.57,
+      "OZONE": 23,
+      "SO2": 18,
+      "NO2": 27,
+      "NH3": 1
+    }
+  ]
