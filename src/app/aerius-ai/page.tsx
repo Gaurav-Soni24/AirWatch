@@ -2,11 +2,11 @@
 
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import React, { useState, useEffect, useRef } from 'react'
-import { MessageSquare, X, Send, Loader2, Bot, User } from "lucide-react"
+import { MessageSquare, X, Send, Loader2, Bot, User, ChevronDown, Plus } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import useColorMode from '@/hooks/useColorMode'
-import { TypeAnimation } from 'react-type-animation' // Import the library
+import { TypeAnimation } from 'react-type-animation'
 
 // Define Message type
 type Message = {
@@ -63,8 +63,10 @@ const AeriusAIPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Scroll to bottom of messages
   useEffect(() => {
@@ -101,6 +103,11 @@ const AeriusAIPage = () => {
 
     if (!input.trim() || isLoading) return;
 
+    // Hide welcome screen if visible
+    if (showWelcomeScreen) {
+      setShowWelcomeScreen(false);
+    }
+
     const userMessage: Message = {
       id: Date.now().toString(),
       content: input,
@@ -134,6 +141,22 @@ const AeriusAIPage = () => {
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const startNewChat = () => {
+    setMessages([
+      {
+        id: "1",
+        content: "Hello! I'm Aerius AI, your air pollution monitoring assistant. How can I help you today?",
+        role: "assistant",
+        createdAt: new Date(),
+      },
+    ]);
+    setShowWelcomeScreen(true);
+    setInput("");
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
   };
 
@@ -191,170 +214,171 @@ const AeriusAIPage = () => {
 
   return (
     <DefaultLayout>
-      <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-black transition-all duration-300">
-        {/* Header section */}
-        <div className="text-center p-8 w-full mb-6">
-          <h1 className="text-6xl font-bold mb-4 text-green-600 dark:text-green-500">Aerius AI</h1>
-          
-          <div className="h-16 flex items-center justify-center">
-            <h2 className="text-3xl font-medium">
-              <TypeAnimation
-                sequence={[
-                  'How can I help you??',
-                  1000, // Wait 1s
-                  'Ask me about air pollution...',
-                  1000,
-                  'Learn about environmental actions...',
-                  1000,
-                  'Monitor air quality with me...',
-                  1000,
-                  'How can I help you??',
-                  1000,
-                ]}
-                wrapper="span"
-                speed={50}
-                className="bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent"
-                repeat={Infinity}
-              />
-            </h2>
-          </div>
-        </div>
-        
-        {/* Chat interface */}
-        <div className="w-full max-w-4xl mx-auto px-4 pb-8 flex-1 flex flex-col">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex-1 flex flex-col overflow-hidden">
-            {/* Chat header */}
-            <div className="border-b bg-gray-50 dark:bg-gray-800 px-4 py-3 rounded-t-lg">
-              <div className="flex items-center gap-2">
-                <div className="bg-green-600 p-1.5 rounded-full">
-                  <Bot className="h-5 w-5 text-white" />
+      <div className="border border-black h-[680px] flex flex-col bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-black transition-all duration-300 rounded-2xl">
+        <div className="flex flex-1 overflow-hidden">
+          {/* Main chat area */}
+          <div className="flex-1 flex flex-col overflow-hidden" ref={chatContainerRef}>
+            {/* Welcome screen - only shown before first user message */}
+            {showWelcomeScreen && (
+              <div className="text-center p-8 mb-auto mt-16">
+                <h1 className="text-6xl font-bold mb-4 text-green-600 dark:text-green-500">Aerius AI</h1>
+                
+                <div className="h-16 flex items-center justify-center mb-8">
+                  <h2 className="text-3xl font-medium">
+                    <TypeAnimation
+                      sequence={[
+                        'How can I help you?',
+                        1000, // Wait 1s
+                        'Ask me about air pollution...',
+                        1000,
+                        'Learn about environmental actions...',
+                        1000,
+                        'Monitor air quality with me...',
+                        1000,
+                        'How can I help you?',
+                        1000,
+                      ]}
+                      wrapper="span"
+                      speed={50}
+                      className="bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent"
+                      repeat={Infinity}
+                    />
+                  </h2>
                 </div>
-                <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">Air Pollution Assistant</h2>
-              </div>
-            </div>
-            
-            {/* Messages area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={cn("flex flex-col space-y-1", message.role === "user" ? "items-end" : "items-start")}
-                >
-                  <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 px-2">
-                    {message.role === "assistant" ? (
-                      <>
-                        <Bot className="h-3 w-3" />
-                        <span>Aerius AI</span>
-                      </>
-                    ) : (
-                      <>
-                        <User className="h-3 w-3" />
-                        <span>You</span>
-                      </>
-                    )}
-                    <span>•</span>
-                    <time>{format(message.createdAt, "h:mm a")}</time>
+                
+                {/* Topic cards */}
+                <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                  <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all flex flex-col h-full">
+                    <h3 className="text-lg font-bold mb-3 text-green-600 dark:text-green-500">Air Quality Topics</h3>
+                    <ul className="space-y-3 flex-1">
+                      <li className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                        <span className="text-gray-700 dark:text-gray-300">Air quality monitoring methods</span>
+                      </li>
+                      <li className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                        <span className="text-gray-700 dark:text-gray-300">Pollution levels and interpretations</span>
+                      </li>
+                      <li className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                        <span className="text-gray-700 dark:text-gray-300">Health effects of air pollution</span>
+                      </li>
+                    </ul>
                   </div>
-                  <div
-                    className={cn(
-                      "max-w-[85%] rounded-2xl p-3",
-                      message.role === "user"
-                        ? "bg-green-600 text-white rounded-tr-none"
-                        : "bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded-tl-none",
-                    )}
-                  >
-                    {formatMessage(message.content)}
+                  
+                  <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all flex flex-col h-full">
+                    <h3 className="text-lg font-bold mb-3 text-green-600 dark:text-green-500">Environmental Actions</h3>
+                    <ul className="space-y-3 flex-1">
+                      <li className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                        <span className="text-gray-700 dark:text-gray-300">Reducing individual carbon footprint</span>
+                      </li>
+                      <li className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                        <span className="text-gray-700 dark:text-gray-300">Community air quality initiatives</span>
+                      </li>
+                      <li className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                        <span className="text-gray-700 dark:text-gray-300">Policy and regulation information</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Chat messages */}
+            <div className={cn(
+              "flex-1 overflow-y-auto transition-all duration-300",
+              showWelcomeScreen ? "opacity-0" : "opacity-100"
+            )}>
+              {messages.map((message, index) => (
+                <div 
+                  key={message.id}
+                  className={cn(
+                    "py-6 px-4 md:px-8 lg:px-12",
+                    message.role === "assistant" 
+                      ? "bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700" 
+                      : "bg-white dark:bg-gray-900"
+                  )}
+                >
+                  <div className="max-w-3xl mx-auto flex items-start gap-4">
+                    <div className={cn(
+                      "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
+                      message.role === "assistant" 
+                        ? "bg-green-100 dark:bg-green-800" 
+                        : "bg-gray-100 dark:bg-gray-700"
+                    )}>
+                      {message.role === "assistant" ? (
+                        <Bot className="h-5 w-5 text-green-600 dark:text-green-300" />
+                      ) : (
+                        <User className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-medium mb-1 text-sm">
+                        {message.role === "assistant" ? "Aerius AI" : "You"}
+                      </div>
+                      <div className="text-gray-800 dark:text-gray-200">
+                        {formatMessage(message.content)}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
 
               {isLoading && (
-                <div className="flex flex-col items-start space-y-1">
-                  <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 px-2">
-                    <Bot className="h-3 w-3" />
-                    <span>Aerius AI</span>
-                    <span>•</span>
-                    <time>{format(new Date(), "h:mm a")}</time>
-                  </div>
-                  <div className="bg-gray-100 dark:bg-gray-700 max-w-[85%] rounded-2xl rounded-tl-none p-3 flex items-center">
-                    <div className="flex items-center">
-                      <span className="text-green-600 dark:text-green-500 font-medium">Generating</span>
-                      <TypeAnimation
-                        sequence={['.', '..']}
-                        wrapper="span"
-                        speed={50}
-                        className="text-green-600 dark:text-green-500"
-                        repeat={Infinity}
-                      />
+                <div className="py-6 px-4 md:px-8 lg:px-12 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                  <div className="max-w-3xl mx-auto flex items-start gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 dark:bg-green-800 flex items-center justify-center">
+                      <Bot className="h-5 w-5 text-green-600 dark:text-green-300" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-medium mb-1 text-sm">Aerius AI</div>
+                      <div className="flex items-center text-gray-800 dark:text-gray-200">
+                        <TypeAnimation
+                          sequence={['.', '..', '...', '']}
+                          wrapper="span"
+                          speed={13}
+                          className="text-green-600 dark:text-green-500 font-medium"
+                          repeat={Infinity}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              <div ref={messagesEndRef} />
+              <div ref={messagesEndRef} className="h-20"></div>
             </div>
 
-            {/* Input form */}
-            <div className="border-t dark:border-gray-700 p-3">
-              <form onSubmit={handleSubmit} className="flex w-full gap-2">
-                <input
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask about air pollution..."
-                  disabled={isLoading}
-                  className="flex-1 bg-gray-100 dark:bg-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-                <button
-                  type="submit"
-                  disabled={isLoading || !input.trim()}
-                  className={cn(
-                    "rounded-full w-10 h-10 flex items-center justify-center transition-all",
-                    input.trim() ? "bg-green-600 hover:bg-green-700 text-white" : "bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500",
-                  )}
-                >
-                  {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-                </button>
-              </form>
-            </div>
-          </div>
-
-          {/* Information cards */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-bold mb-2 text-green-600 dark:text-green-500">Air Quality Topics</h3>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Air quality monitoring methods</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Pollution levels and interpretations</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Health effects of air pollution</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-bold mb-2 text-green-600 dark:text-green-500">Environmental Actions</h3>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Reducing individual carbon footprint</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Community air quality initiatives</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Policy and regulation information</span>
-                </li>
-              </ul>
+            {/* Input form - fixed at bottom */}
+            <div className="border-t dark:border-gray-700 bg-white dark:bg-gray-900 p-4 md:p-6">
+              <div className="max-w-3xl mx-auto">
+                <form onSubmit={handleSubmit} className="flex w-full gap-2 relative">
+                  <input
+                    ref={inputRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Ask about air pollution..."
+                    disabled={isLoading}
+                    className="flex-1 bg-gray-100 dark:bg-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isLoading || !input.trim()}
+                    className={cn(
+                      "absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1.5 transition-all",
+                      input.trim() ? "bg-green-600 hover:bg-green-700 text-white" : "bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500"
+                    )}
+                  >
+                    {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
+                  </button>
+                </form>
+                <div className="text-xs text-center text-gray-500 dark:text-gray-400 mt-2">
+                  Aerius AI may produce inaccurate information. Your data helps us improve.
+                </div>
+              </div>
             </div>
           </div>
         </div>
