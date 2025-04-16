@@ -2,7 +2,7 @@
     {
       "id": null,
       "City": "Delhi",
-      "AQI": 320,
+      "AQI": 357,
       "PM25": 380.67,
       "PM10": 402,
       "CO": 96.25,
@@ -14,7 +14,7 @@
     {
       "id": null,
       "City": "Ghaziabad",
-      "AQI": 257,
+      "AQI": 332,
       "PM25": 256.8,
       "PM10": 192,
       "CO": 101.14,
@@ -25,8 +25,8 @@
     },
     {
       "id": null,
-      "City": "Noida",
-      "AQI": 257,
+      "City": "Byrnihat",
+      "AQI": 303,
       "PM25": 229,
       "PM10": 257.22,
       "CO": 108,
@@ -37,8 +37,8 @@
     },
     {
       "id": null,
-      "City": "Agra",
-      "AQI": 245,
+      "City": "Chandigarh",
+      "AQI": 302,
       "PM25": 61.2,
       "PM10": 66,
       "CO": 21.5,
@@ -49,8 +49,8 @@
     },
     {
       "id": null,
-      "City": "Charkhi Dadri",
-      "AQI": 233,
+      "City": "Hapur",
+      "AQI": 287,
       "PM25": 232.67,
       "PM10": 177.33,
       "CO": 14.45,
@@ -61,8 +61,8 @@
     },
     {
       "id": null,
-      "City": "Greater Noida",
-      "AQI": 225,
+      "City": "Dhanbad",
+      "AQI": 277,
       "PM25": 198.2,
       "PM10": 225.43,
       "CO": 74.75,

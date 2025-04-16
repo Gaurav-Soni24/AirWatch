@@ -190,7 +190,7 @@ const Profile = () => {
                 <h2 className="text-xl sm:text-2xl font-semibold text-black dark:text-white mt-6 sm:mt-8 mb-4 sm:mb-6">Share AirWatch</h2>
                 <div className="flex flex-col items-center justify-center space-y-4">
                   <Image
-                    src="/path/to/qr-code.png"
+                    src="/images/qr.jpg"
                     alt="AirWatch QR Code"
                     width={160}
                     height={160}
