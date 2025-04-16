@@ -1,8 +1,7 @@
-export type Chat = {
-  avatar: string;
-  name: string;
-  text: string;
-  time: number;
-  textCount: number;
-  dot: number;
-};
+// types/chat.ts
+export type Message = {
+  id: string
+  content: string
+  role: "user" | "assistant"
+  createdAt: Date
+}

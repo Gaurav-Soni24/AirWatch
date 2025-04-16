@@ -66,6 +66,25 @@ const menuGroups = [
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M12 2c-1.1 0-2 .9-2 2v1H8c-1.1 0-2 .9-2 2v2h12V7c0-1.1-.9-2-2-2h-2V4c0-1.1-.9-2-2-2zm6 7H6v11c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9zm-6 2a1.5 1.5 0 11.001 3.001A1.5 1.5 0 0112 11z"
+              fill=""
+            />
+          </svg>
+        ),
+        label: "Aerius AI",
+        route: "/aerius-ai",
+      },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
               d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
               fill=""
             />
@@ -115,6 +134,7 @@ const menuGroups = [
     ],
   },
 ];
+
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();

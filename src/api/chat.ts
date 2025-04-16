@@ -1,3 +1,5 @@
+//chat.ts
+
 // Type for chat messages
 type Message = {
   id: string
@@ -98,7 +100,7 @@ Now, respond to the following conversation and question:`,
     // Note: In a real implementation, you would use an environment variable for the API key
     // and the API endpoint would be called from a server-side function
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=YOUR_API_KEY",
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: {
