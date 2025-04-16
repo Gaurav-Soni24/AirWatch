@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import AirQualityDashboard from "@/components/Dashboard/E-commerce";
+import AirQualityDashboard from "@/components/Dashboard/airPollutionDashboard";
 
 export const metadata: Metadata = {
   title: "AirWatch - Air Pollution Dashboard",

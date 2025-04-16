@@ -85,6 +85,25 @@ const menuGroups = [
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"
+              fill=""
+            />
+          </svg>
+        ),
+        label: "EcoMatch",
+        route: "/game",
+      },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
               d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
               fill=""
             />
@@ -108,9 +127,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
-        <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+        <div className="flex items-center justify-center gap-2 px-6 py-5.5 lg:py-6.5">
           <Link href="/">
-            <div className="font-bold text-5xl flex justify-center items-center ">
+            <div className="font-bold text-4xl flex justify-center items-center ">
               <span className="text-gray-200">Air</span>
               <span className="text-green-500">Watch</span>
             </div>

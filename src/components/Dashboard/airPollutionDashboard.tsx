@@ -11,7 +11,7 @@ import { ApexOptions } from "apexcharts";
 const MapOne = dynamic(() => import("@/components/Maps/MapOne"), { ssr: false });
 const ChartThree = dynamic(() => import("@/components/Charts/ChartThree"), { ssr: false });
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useLocation } from '../../components/contexts/LocationContext';
+import { useLocation } from '../contexts/LocationContext';
 import HistoricalAverageAirQualityDataOfMetropolitanCities from '../HistoricalAverageAirQualityDataOfMetropolitanCities/HistoricalAverageAirQualityDataOfMetropolitanCities';
 import TopPollutedCities from '../TopPollutedCities/TopPollutedCities';
 import LeastPollutedCities from '../LeastPollutedCities/LeastPollutedCities';
