@@ -24,6 +24,6 @@
     "types": ["leaflet"],
     "allowSyntheticDefaultImports": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/aerius-ai/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/aerius-ai/page.tsx"],
   "exclude": ["node_modules"]
 }
