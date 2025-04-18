@@ -55,8 +55,8 @@ This Next.js-based app isn't just another data dashboard — it's an intelligent
 
 ### 🔧 Installation  
 ```bash
-git clone https://github.com/Gaurav-Soni24/free-nextjs-admin-dashboard.git
-cd free-nextjs-admin-dashboard
+git clone https://github.com/Gaurav-Soni24/AirWatch.git
+cd AirWatch
 npm install
 npm run dev
 ```
